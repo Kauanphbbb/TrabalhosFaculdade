@@ -1,23 +1,25 @@
-# _*_ coding: utf-8 _*_ 
+# _*_ coding: utf-8 _*_
 import mysql.connector
+from config import *
 
-connection = mysql.connector.connect(host='localhost', user ='newUser', password='', database='agenda' )
+try:
+    connection = mysql.connector.connect(
+        host=HOST, user=USER, password=PASSWORD, database=DATABASE)
 
+    cursor = connection.cursor(dictionary=True)
 
-cursor = connection.cursor(dictionary = True)
+    # executar sql
+    cursor.execute("SELECT * FROM contato ")
 
-#executar sql
-cursor.execute("SELECT * FROM contato ")
+    # recuperar  dados
+    resultado = cursor.fetchall()
 
-#recuperar  dados 
+    # mostrar resultado
+    print('Agenda: ')
 
-resultado = cursor.fetchall()
+    for linha in resultado:
+        print(linha)
 
-#mostrar resultado
-print('Agenda: ')
-
-for linha in resultado : 
-	print(linha)
-
-
-cursor.close()
+    cursor.close()
+except:
+    print("Erro ao procurar contatos")
